@@ -13,8 +13,8 @@ users = [
 def index():
     if not "loggedin" in session:
         return redirect(url_for("login"))
-    
-    return render_template("index.html")
+
+    return render_template("index.html", user=session["loggedin"])
 
 @app.route("/login")
 def login():
@@ -28,6 +28,7 @@ def logincheck():
     if not query in users:
         return jsonify({"status": False, "message": "An error occured"})
     
+    session["loggedin"] = query
     return jsonify({"status": True})
 
 if __name__ == '__main__':
